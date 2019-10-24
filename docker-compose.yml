@@ -12,6 +12,6 @@ services:
       - 80:8005
     entrypoint: ./docker-entrypoint-viewer.sh
     volumes:
-      - "/data/moloch/raw:/data/moloch/raw"
+      - "/pcaps:/data/moloch/raw"
   elasticsearch:
     image: elasticsearch:6.8.3
