@@ -18,4 +18,4 @@ set -e
 
 /data/moloch/db/db.pl http://elasticsearch:9200 init
 /data/moloch/bin/moloch_add_user.sh "$MOLOCH_USER" "$MOLOCH_NAME" "$MOLOCH_PASSWORD" --admin
-cd viewer && /data/moloch/bin/node ./viewer.js || sleep 100000
+cd viewer && /data/moloch/bin/node ./viewer.js & ./bin/moloch-capture -R /data/moloch/raw -m

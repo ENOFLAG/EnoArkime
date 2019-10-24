@@ -9,5 +9,5 @@ done
 
 sleep 15
 
-/data/moloch/bin/moloch-capture --host moloch-capture -R /data/moloch/raw/ -m
+/data/moloch/bin/moloch-capture --host moloch-viewer -R /data/moloch/raw/ -m
 

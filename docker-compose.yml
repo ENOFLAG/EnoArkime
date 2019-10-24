@@ -1,11 +1,11 @@
 version: '3.4'
 
 services:
-  moloch-capture:
-    build: .
-    entrypoint: ./docker-entrypoint-capture.sh
-    volumes:
-      - "/data/moloch/raw:/data/moloch/raw"
+  #moloch-capture:
+  #  build: .
+  #  entrypoint: ./docker-entrypoint-capture.sh
+  #  volumes:
+  #    - "/data/moloch/raw:/data/moloch/raw"
   moloch-viewer:
     build: .
     ports:
@@ -15,5 +15,3 @@ services:
       - "/data/moloch/raw:/data/moloch/raw"
   elasticsearch:
     image: elasticsearch:6.8.3
-    ports:
-      - 127.0.0.1:81:9200
