@@ -1,17 +1,12 @@
 version: '3'
-
 services:
-  #moloch-capture:
-  #  build: .
-  #  entrypoint: ./docker-entrypoint-capture.sh
-  #  volumes:
-  #    - "/data/moloch/raw:/data/moloch/raw"
-  moloch-viewer:
+  moloch:
     build: .
     ports:
-      - 80:8005
-    entrypoint: ./docker-entrypoint-viewer.sh
+      - 8005:8005
     volumes:
       - "/pcaps:/data/moloch/raw"
-  elasticsearch:
+    environment:
+      - "MOLOCH_PASSWORD=keks"
+  elasticsearchmoloch:
     image: elasticsearch:6.8.5
