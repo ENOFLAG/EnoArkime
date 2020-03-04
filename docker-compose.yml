@@ -1,6 +1,7 @@
 version: '3'
 services:
   moloch:
+    image: enoflag/enomoloch
     build: .
     ports:
       - 8005:8005
