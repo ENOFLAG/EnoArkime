@@ -9,4 +9,8 @@ services:
     environment:
       - "MOLOCH_PASSWORD=keks"
   elasticsearchmoloch:
-    image: elasticsearch:6.8.5
+    image: elasticsearch:7.6.0
+    environment:
+      - discovery.type=single-node
+      # should be half of the available RAM
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
