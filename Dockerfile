@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV MOLOCH_VERSION "moloch_2.1.0-1_amd64.deb"
+ENV MOLOCH_VERSION "moloch_2.2.2-1_amd64.deb"
 
 RUN apt-get update && apt-get install -y --no-install-recommends wget libwww-perl libjson-perl ethtool libyaml-dev pwgen curl libmagic-dev
 RUN curl https://files.molo.ch/builds/ubuntu-18.04/$MOLOCH_VERSION > $MOLOCH_VERSION
