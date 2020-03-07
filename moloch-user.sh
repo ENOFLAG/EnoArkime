@@ -4,6 +4,6 @@
 cd viewer
 while :
 do
-  /data/moloch/bin/moloch_add_user.sh "moloch" "moloch" "$MOLOCH_PASSWORD" --admin
+  /data/moloch/bin/moloch_add_user.sh "moloch" "moloch" "$MOLOCH_PASSWORD" --admin --packetSearch
   sleep 10
 done
