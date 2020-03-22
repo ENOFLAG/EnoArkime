@@ -13,4 +13,7 @@ RUN mkdir raw
 COPY ./config.ini ./etc/config.ini
 COPY *.sh ./
 
+RUN echo FOOECHO
+COPY ./hello_world/target/debug/libhello_world.so ./plugins/libhello_world.so
+
 ENTRYPOINT ["sh", "docker-entrypoint.sh"]
