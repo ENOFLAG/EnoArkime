@@ -55,8 +55,21 @@ pub extern fn moloch_plugin_init() {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn moloch_plugin_tcp_func(session: *mut ffi::moloch_session, data: *mut u8, len: i32) {
-    println!("#### MolochPluginTcpFunc {:?} {:?} {:?}", session, data, len)
+pub unsafe extern "C" fn moloch_plugin_tcp_func(session_ptr: *mut ffi::moloch_session, data: *const u8, len: i32, which: i32) {
+    println!("#### MolochPluginTcpFunc {:?} {:?} {:?}", session_ptr, data, len);
+    let session = &unsafe { *session_ptr };
+    let tcp_data_head = session.tcpData;
+
+    println!("#### data: {:?}", data);
+    let rustdata = unsafe { std::slice::from_raw_parts(data, len as usize) };
+    println!("#### {:?}", rustdata);
+    println!("#### {:?}", std::str::from_utf8(rustdata));
+
+    println!("#### tcp_data_head: {:?}", tcp_data_head);
+    if !tcp_data_head.td_next.is_null() {
+        handle_tcp_session(&tcp_data_head)
+    }
+    
 }
 
 #[no_mangle]

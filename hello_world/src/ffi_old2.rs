@@ -1584,6 +1584,7 @@ pub const MOLOCH_PLUGIN_HP_OMC: u32 = 262144;
 pub const MOLOCH_PLUGIN_HP_OHFR: u32 = 524288;
 pub const MOLOCH_PLUGIN_SMTP_OH: u32 = 1048576;
 pub const MOLOCH_PLUGIN_SMTP_OHC: u32 = 2097152;
+pub type size_t = ::std::os::raw::c_ulong;
 pub type __u_char = ::std::os::raw::c_uchar;
 pub type __u_short = ::std::os::raw::c_ushort;
 pub type __u_int = ::std::os::raw::c_uint;
@@ -1918,7 +1919,7 @@ pub struct _IO_FILE {
     pub __pad2: *mut ::std::os::raw::c_void,
     pub __pad3: *mut ::std::os::raw::c_void,
     pub __pad4: *mut ::std::os::raw::c_void,
-    pub __pad5: usize,
+    pub __pad5: size_t,
     pub _mode: ::std::os::raw::c_int,
     pub _unused2: [::std::os::raw::c_char; 20usize],
 }
@@ -2243,14 +2244,14 @@ pub type __io_read_fn = ::std::option::Option<
     unsafe extern "C" fn(
         __cookie: *mut ::std::os::raw::c_void,
         __buf: *mut ::std::os::raw::c_char,
-        __nbytes: usize,
+        __nbytes: size_t,
     ) -> __ssize_t,
 >;
 pub type __io_write_fn = ::std::option::Option<
     unsafe extern "C" fn(
         __cookie: *mut ::std::os::raw::c_void,
         __buf: *const ::std::os::raw::c_char,
-        __n: usize,
+        __n: size_t,
     ) -> __ssize_t,
 >;
 pub type __io_seek_fn = ::std::option::Option<
@@ -2316,7 +2317,11 @@ extern "C" {
         -> __ssize_t;
 }
 extern "C" {
-    pub fn _IO_sgetn(arg1: *mut _IO_FILE, arg2: *mut ::std::os::raw::c_void, arg3: usize) -> usize;
+    pub fn _IO_sgetn(
+        arg1: *mut _IO_FILE,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: size_t,
+    ) -> size_t;
 }
 extern "C" {
     pub fn _IO_seekoff(
@@ -2337,6 +2342,7 @@ extern "C" {
     pub fn _IO_free_backup_area(arg1: *mut _IO_FILE);
 }
 pub type off_t = __off_t;
+pub type ssize_t = __ssize_t;
 pub type fpos_t = _G_fpos_t;
 extern "C" {
     pub static mut stdin: *mut _IO_FILE;
@@ -2408,14 +2414,14 @@ extern "C" {
 extern "C" {
     pub fn fmemopen(
         __s: *mut ::std::os::raw::c_void,
-        __len: usize,
+        __len: size_t,
         __modes: *const ::std::os::raw::c_char,
     ) -> *mut FILE;
 }
 extern "C" {
     pub fn open_memstream(
         __bufloc: *mut *mut ::std::os::raw::c_char,
-        __sizeloc: *mut usize,
+        __sizeloc: *mut size_t,
     ) -> *mut FILE;
 }
 extern "C" {
@@ -2426,11 +2432,11 @@ extern "C" {
         __stream: *mut FILE,
         __buf: *mut ::std::os::raw::c_char,
         __modes: ::std::os::raw::c_int,
-        __n: usize,
+        __n: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn setbuffer(__stream: *mut FILE, __buf: *mut ::std::os::raw::c_char, __size: usize);
+    pub fn setbuffer(__stream: *mut FILE, __buf: *mut ::std::os::raw::c_char, __size: size_t);
 }
 extern "C" {
     pub fn setlinebuf(__stream: *mut FILE);
@@ -2635,7 +2641,7 @@ extern "C" {
 extern "C" {
     pub fn __getdelim(
         __lineptr: *mut *mut ::std::os::raw::c_char,
-        __n: *mut usize,
+        __n: *mut size_t,
         __delimiter: ::std::os::raw::c_int,
         __stream: *mut FILE,
     ) -> __ssize_t;
@@ -2643,7 +2649,7 @@ extern "C" {
 extern "C" {
     pub fn getdelim(
         __lineptr: *mut *mut ::std::os::raw::c_char,
-        __n: *mut usize,
+        __n: *mut size_t,
         __delimiter: ::std::os::raw::c_int,
         __stream: *mut FILE,
     ) -> __ssize_t;
@@ -2651,7 +2657,7 @@ extern "C" {
 extern "C" {
     pub fn getline(
         __lineptr: *mut *mut ::std::os::raw::c_char,
-        __n: *mut usize,
+        __n: *mut size_t,
         __stream: *mut FILE,
     ) -> __ssize_t;
 }
@@ -2667,34 +2673,34 @@ extern "C" {
 extern "C" {
     pub fn fread(
         __ptr: *mut ::std::os::raw::c_void,
-        __size: usize,
-        __n: usize,
+        __size: size_t,
+        __n: size_t,
         __stream: *mut FILE,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn fwrite(
         __ptr: *const ::std::os::raw::c_void,
-        __size: usize,
-        __n: usize,
+        __size: size_t,
+        __n: size_t,
         __s: *mut FILE,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn fread_unlocked(
         __ptr: *mut ::std::os::raw::c_void,
-        __size: usize,
-        __n: usize,
+        __size: size_t,
+        __n: size_t,
         __stream: *mut FILE,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn fwrite_unlocked(
         __ptr: *const ::std::os::raw::c_void,
-        __size: usize,
-        __n: usize,
+        __size: size_t,
+        __n: size_t,
         __stream: *mut FILE,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn fseek(
@@ -2798,7 +2804,7 @@ extern "C" {
         __dest: *mut ::std::os::raw::c_void,
         __src: *const ::std::os::raw::c_void,
         __c: ::std::os::raw::c_int,
-        __n: usize,
+        __n: size_t,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -2959,9 +2965,9 @@ extern "C" {
     pub fn strxfrm_l(
         __dest: *mut ::std::os::raw::c_char,
         __src: *const ::std::os::raw::c_char,
-        __n: usize,
+        __n: size_t,
         __l: locale_t,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn strdup(__s: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
@@ -3032,7 +3038,7 @@ extern "C" {
     pub fn strlen(__s: *const ::std::os::raw::c_char) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    pub fn strnlen(__string: *const ::std::os::raw::c_char, __maxlen: usize) -> usize;
+    pub fn strnlen(__string: *const ::std::os::raw::c_char, __maxlen: size_t) -> size_t;
 }
 extern "C" {
     pub fn strerror(__errnum: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_char;
@@ -3042,7 +3048,7 @@ extern "C" {
     pub fn strerror_r(
         __errnum: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __buflen: usize,
+        __buflen: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -3055,14 +3061,14 @@ extern "C" {
     pub fn bcmp(
         __s1: *const ::std::os::raw::c_void,
         __s2: *const ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn bcopy(
         __src: *const ::std::os::raw::c_void,
         __dest: *mut ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
     );
 }
 extern "C" {
@@ -3113,12 +3119,12 @@ extern "C" {
     pub fn strncasecmp_l(
         __s1: *const ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
-        __n: usize,
+        __n: size_t,
         __loc: locale_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn explicit_bzero(__s: *mut ::std::os::raw::c_void, __n: usize);
+    pub fn explicit_bzero(__s: *mut ::std::os::raw::c_void, __n: size_t);
 }
 extern "C" {
     pub fn strsep(
@@ -3145,7 +3151,7 @@ extern "C" {
     pub fn __stpncpy(
         __dest: *mut ::std::os::raw::c_char,
         __src: *const ::std::os::raw::c_char,
-        __n: usize,
+        __n: size_t,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
@@ -3282,7 +3288,7 @@ fn bindgen_test_layout_lldiv_t() {
     );
 }
 extern "C" {
-    pub fn __ctype_get_mb_cur_max() -> usize;
+    pub fn __ctype_get_mb_cur_max() -> size_t;
 }
 extern "C" {
     pub fn atof(__nptr: *const ::std::os::raw::c_char) -> f64;
@@ -4547,7 +4553,7 @@ extern "C" {
     pub fn initstate(
         __seed: ::std::os::raw::c_uint,
         __statebuf: *mut ::std::os::raw::c_char,
-        __statelen: usize,
+        __statelen: size_t,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
@@ -4660,7 +4666,7 @@ extern "C" {
     pub fn initstate_r(
         __seed: ::std::os::raw::c_uint,
         __statebuf: *mut ::std::os::raw::c_char,
-        __statelen: usize,
+        __statelen: size_t,
         __buf: *mut random_data,
     ) -> ::std::os::raw::c_int;
 }
@@ -4854,17 +4860,17 @@ extern "C" {
     pub fn alloca(__size: ::std::os::raw::c_ulong) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn valloc(__size: usize) -> *mut ::std::os::raw::c_void;
+    pub fn valloc(__size: size_t) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn posix_memalign(
         __memptr: *mut *mut ::std::os::raw::c_void,
-        __alignment: usize,
-        __size: usize,
+        __alignment: size_t,
+        __size: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn aligned_alloc(__alignment: usize, __size: usize) -> *mut ::std::os::raw::c_void;
+    pub fn aligned_alloc(__alignment: size_t, __size: size_t) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn abort();
@@ -4950,16 +4956,16 @@ extern "C" {
     pub fn bsearch(
         __key: *const ::std::os::raw::c_void,
         __base: *const ::std::os::raw::c_void,
-        __nmemb: usize,
-        __size: usize,
+        __nmemb: size_t,
+        __size: size_t,
         __compar: __compar_fn_t,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn qsort(
         __base: *mut ::std::os::raw::c_void,
-        __nmemb: usize,
-        __size: usize,
+        __nmemb: size_t,
+        __size: size_t,
         __compar: __compar_fn_t,
     );
 }
@@ -5037,7 +5043,7 @@ extern "C" {
         __decpt: *mut ::std::os::raw::c_int,
         __sign: *mut ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5047,7 +5053,7 @@ extern "C" {
         __decpt: *mut ::std::os::raw::c_int,
         __sign: *mut ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5057,7 +5063,7 @@ extern "C" {
         __decpt: *mut ::std::os::raw::c_int,
         __sign: *mut ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5067,27 +5073,35 @@ extern "C" {
         __decpt: *mut ::std::os::raw::c_int,
         __sign: *mut ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn mblen(__s: *const ::std::os::raw::c_char, __n: usize) -> ::std::os::raw::c_int;
+    pub fn mblen(__s: *const ::std::os::raw::c_char, __n: size_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn mbtowc(
         __pwc: *mut wchar_t,
         __s: *const ::std::os::raw::c_char,
-        __n: usize,
+        __n: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn wctomb(__s: *mut ::std::os::raw::c_char, __wchar: wchar_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn mbstowcs(__pwcs: *mut wchar_t, __s: *const ::std::os::raw::c_char, __n: usize) -> usize;
+    pub fn mbstowcs(
+        __pwcs: *mut wchar_t,
+        __s: *const ::std::os::raw::c_char,
+        __n: size_t,
+    ) -> size_t;
 }
 extern "C" {
-    pub fn wcstombs(__s: *mut ::std::os::raw::c_char, __pwcs: *const wchar_t, __n: usize) -> usize;
+    pub fn wcstombs(
+        __s: *mut ::std::os::raw::c_char,
+        __pwcs: *const wchar_t,
+        __n: size_t,
+    ) -> size_t;
 }
 extern "C" {
     pub fn rpmatch(__response: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
@@ -5257,31 +5271,31 @@ extern "C" {
     pub fn read(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_void,
-        __nbytes: usize,
-    ) -> isize;
+        __nbytes: size_t,
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn write(
         __fd: ::std::os::raw::c_int,
         __buf: *const ::std::os::raw::c_void,
-        __n: usize,
-    ) -> isize;
+        __n: size_t,
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn pread(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_void,
-        __nbytes: usize,
+        __nbytes: size_t,
         __offset: __off_t,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn pwrite(
         __fd: ::std::os::raw::c_int,
         __buf: *const ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
         __offset: __off_t,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn pipe(__pipedes: *mut ::std::os::raw::c_int) -> ::std::os::raw::c_int;
@@ -5338,8 +5352,10 @@ extern "C" {
     pub fn fchdir(__fd: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn getcwd(__buf: *mut ::std::os::raw::c_char, __size: usize)
-        -> *mut ::std::os::raw::c_char;
+    pub fn getcwd(
+        __buf: *mut ::std::os::raw::c_char,
+        __size: size_t,
+    ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn getwd(__buf: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
@@ -5729,8 +5745,8 @@ extern "C" {
     pub fn confstr(
         __name: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
-    ) -> usize;
+        __len: size_t,
+    ) -> size_t;
 }
 extern "C" {
     pub fn getpid() -> __pid_t;
@@ -5805,7 +5821,7 @@ extern "C" {
     pub fn ttyname_r(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __buflen: usize,
+        __buflen: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5839,8 +5855,8 @@ extern "C" {
     pub fn readlink(
         __path: *const ::std::os::raw::c_char,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
-    ) -> isize;
+        __len: size_t,
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn symlinkat(
@@ -5854,8 +5870,8 @@ extern "C" {
         __fd: ::std::os::raw::c_int,
         __path: *const ::std::os::raw::c_char,
         __buf: *mut ::std::os::raw::c_char,
-        __len: usize,
-    ) -> isize;
+        __len: size_t,
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn unlink(__name: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
@@ -5882,7 +5898,7 @@ extern "C" {
 extern "C" {
     pub fn getlogin_r(
         __name: *mut ::std::os::raw::c_char,
-        __name_len: usize,
+        __name_len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5908,12 +5924,13 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn gethostname(__name: *mut ::std::os::raw::c_char, __len: usize) -> ::std::os::raw::c_int;
+    pub fn gethostname(__name: *mut ::std::os::raw::c_char, __len: size_t)
+        -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn sethostname(
         __name: *const ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5922,13 +5939,13 @@ extern "C" {
 extern "C" {
     pub fn getdomainname(
         __name: *mut ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn setdomainname(
         __name: *const ::std::os::raw::c_char,
-        __len: usize,
+        __len: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -5940,8 +5957,8 @@ extern "C" {
 extern "C" {
     pub fn profil(
         __sample_buffer: *mut ::std::os::raw::c_ushort,
-        __size: usize,
-        __offset: usize,
+        __size: size_t,
+        __offset: size_t,
         __scale: ::std::os::raw::c_uint,
     ) -> ::std::os::raw::c_int;
 }
@@ -6015,14 +6032,14 @@ extern "C" {
 extern "C" {
     pub fn getentropy(
         __buffer: *mut ::std::os::raw::c_void,
-        __length: usize,
+        __length: size_t,
     ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct iovec {
     pub iov_base: *mut ::std::os::raw::c_void,
-    pub iov_len: usize,
+    pub iov_len: size_t,
 }
 #[test]
 fn bindgen_test_layout_iovec() {
@@ -6185,9 +6202,9 @@ pub struct msghdr {
     pub msg_name: *mut ::std::os::raw::c_void,
     pub msg_namelen: socklen_t,
     pub msg_iov: *mut iovec,
-    pub msg_iovlen: usize,
+    pub msg_iovlen: size_t,
     pub msg_control: *mut ::std::os::raw::c_void,
-    pub msg_controllen: usize,
+    pub msg_controllen: size_t,
     pub msg_flags: ::std::os::raw::c_int,
 }
 #[test]
@@ -6276,7 +6293,7 @@ fn bindgen_test_layout_msghdr() {
 #[repr(C)]
 #[derive(Debug)]
 pub struct cmsghdr {
-    pub cmsg_len: usize,
+    pub cmsg_len: size_t,
     pub cmsg_level: ::std::os::raw::c_int,
     pub cmsg_type: ::std::os::raw::c_int,
     pub __cmsg_data: __IncompleteArrayField<::std::os::raw::c_uchar>,
@@ -6428,51 +6445,51 @@ extern "C" {
     pub fn send(
         __fd: ::std::os::raw::c_int,
         __buf: *const ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
         __flags: ::std::os::raw::c_int,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn recv(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
         __flags: ::std::os::raw::c_int,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn sendto(
         __fd: ::std::os::raw::c_int,
         __buf: *const ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
         __flags: ::std::os::raw::c_int,
         __addr: *const sockaddr,
         __addr_len: socklen_t,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn recvfrom(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_void,
-        __n: usize,
+        __n: size_t,
         __flags: ::std::os::raw::c_int,
         __addr: *mut sockaddr,
         __addr_len: *mut socklen_t,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn sendmsg(
         __fd: ::std::os::raw::c_int,
         __message: *const msghdr,
         __flags: ::std::os::raw::c_int,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn recvmsg(
         __fd: ::std::os::raw::c_int,
         __message: *mut msghdr,
         __flags: ::std::os::raw::c_int,
-    ) -> isize;
+    ) -> ssize_t;
 }
 extern "C" {
     pub fn getsockopt(
@@ -10191,7 +10208,7 @@ pub type http_data_cb = ::std::option::Option<
     unsafe extern "C" fn(
         arg1: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     ) -> ::std::os::raw::c_int,
 >;
 pub type http_cb =
@@ -10705,8 +10722,8 @@ extern "C" {
         parser: *mut http_parser,
         settings: *const http_parser_settings,
         data: *const ::std::os::raw::c_char,
-        len: usize,
-    ) -> usize;
+        len: size_t,
+    ) -> size_t;
 }
 extern "C" {
     pub fn http_should_keep_alive(parser: *const http_parser) -> ::std::os::raw::c_int;
@@ -10723,7 +10740,7 @@ extern "C" {
 extern "C" {
     pub fn http_parser_parse_url(
         buf: *const ::std::os::raw::c_char,
-        buflen: usize,
+        buflen: size_t,
         is_connect: ::std::os::raw::c_int,
         u: *mut http_parser_url,
     ) -> ::std::os::raw::c_int;
@@ -11029,19 +11046,19 @@ extern "C" {
 extern "C" {
     pub fn strftime(
         __s: *mut ::std::os::raw::c_char,
-        __maxsize: usize,
+        __maxsize: size_t,
         __format: *const ::std::os::raw::c_char,
         __tp: *const tm,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn strftime_l(
         __s: *mut ::std::os::raw::c_char,
-        __maxsize: usize,
+        __maxsize: size_t,
         __format: *const ::std::os::raw::c_char,
         __tp: *const tm,
         __loc: locale_t,
-    ) -> usize;
+    ) -> size_t;
 }
 extern "C" {
     pub fn gmtime(__timer: *const time_t) -> *mut tm;
@@ -14755,7 +14772,7 @@ extern "C" {
 pub struct stack_t {
     pub ss_sp: *mut ::std::os::raw::c_void,
     pub ss_flags: ::std::os::raw::c_int,
-    pub ss_size: usize,
+    pub ss_size: size_t,
 }
 #[test]
 fn bindgen_test_layout_stack_t() {
@@ -16686,7 +16703,7 @@ extern "C" {
     pub fn getdirentries(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_char,
-        __nbytes: usize,
+        __nbytes: size_t,
         __basep: *mut __off_t,
     ) -> __ssize_t;
 }
@@ -27275,10 +27292,10 @@ fn bindgen_test_layout_cpu_set_t() {
     );
 }
 extern "C" {
-    pub fn __sched_cpucount(__setsize: usize, __setp: *const cpu_set_t) -> ::std::os::raw::c_int;
+    pub fn __sched_cpucount(__setsize: size_t, __setp: *const cpu_set_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn __sched_cpualloc(__count: usize) -> *mut cpu_set_t;
+    pub fn __sched_cpualloc(__count: size_t) -> *mut cpu_set_t;
 }
 extern "C" {
     pub fn __sched_cpufree(__set: *mut cpu_set_t);
@@ -27467,13 +27484,13 @@ extern "C" {
 extern "C" {
     pub fn pthread_attr_getguardsize(
         __attr: *const pthread_attr_t,
-        __guardsize: *mut usize,
+        __guardsize: *mut size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn pthread_attr_setguardsize(
         __attr: *mut pthread_attr_t,
-        __guardsize: usize,
+        __guardsize: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -27539,27 +27556,27 @@ extern "C" {
 extern "C" {
     pub fn pthread_attr_getstacksize(
         __attr: *const pthread_attr_t,
-        __stacksize: *mut usize,
+        __stacksize: *mut size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn pthread_attr_setstacksize(
         __attr: *mut pthread_attr_t,
-        __stacksize: usize,
+        __stacksize: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn pthread_attr_getstack(
         __attr: *const pthread_attr_t,
         __stackaddr: *mut *mut ::std::os::raw::c_void,
-        __stacksize: *mut usize,
+        __stacksize: *mut size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn pthread_attr_setstack(
         __attr: *mut pthread_attr_t,
         __stackaddr: *mut ::std::os::raw::c_void,
-        __stacksize: usize,
+        __stacksize: size_t,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -34072,7 +34089,7 @@ extern "C" {
         match_: *const ::std::os::raw::c_uchar,
         matchlen: ::std::os::raw::c_int,
         func: MolochClassifyFunc,
-        sessionsize: usize,
+        sessionsize: size_t,
         apiversion: ::std::os::raw::c_int,
     );
 }
@@ -34084,7 +34101,7 @@ extern "C" {
         match_: *const ::std::os::raw::c_uchar,
         matchlen: ::std::os::raw::c_int,
         func: MolochClassifyFunc,
-        sessionsize: usize,
+        sessionsize: size_t,
         apiversion: ::std::os::raw::c_int,
     );
 }
@@ -34095,7 +34112,7 @@ extern "C" {
         port: u16,
         type_: u32,
         func: MolochClassifyFunc,
-        sessionsize: usize,
+        sessionsize: size_t,
         apiversion: ::std::os::raw::c_int,
     );
 }
@@ -34133,7 +34150,7 @@ extern "C" {
         data: *mut ::std::os::raw::c_char,
         data_len: u32,
         headers: *mut *mut ::std::os::raw::c_char,
-        return_len: *mut usize,
+        return_len: *mut size_t,
     ) -> *mut ::std::os::raw::c_uchar;
 }
 extern "C" {
@@ -34166,7 +34183,7 @@ extern "C" {
         server: *mut ::std::os::raw::c_void,
         key: *mut ::std::os::raw::c_char,
         key_len: ::std::os::raw::c_int,
-        mlen: *mut usize,
+        mlen: *mut size_t,
     ) -> *mut ::std::os::raw::c_uchar;
 }
 extern "C" {
@@ -34566,7 +34583,7 @@ extern "C" {
         preProcess: MolochProtocolPreProcess_cb,
         process: MolochProtocolProcess_cb,
         sFree: MolochProtocolSessionFree_cb,
-        sessionsize: usize,
+        sessionsize: size_t,
         apiversion: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
@@ -34609,7 +34626,7 @@ pub type MolochPluginHttpDataFunc = ::std::option::Option<
         session: *mut MolochSession_t,
         hp: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     ),
 >;
 pub type MolochPluginHttpFunc = ::std::option::Option<
@@ -34619,9 +34636,9 @@ pub type MolochPluginSMTPHeaderFunc = ::std::option::Option<
     unsafe extern "C" fn(
         session: *mut MolochSession_t,
         field: *const ::std::os::raw::c_char,
-        field_len: usize,
+        field_len: size_t,
         value: *const ::std::os::raw::c_char,
-        value_len: usize,
+        value_len: size_t,
     ),
 >;
 pub type MolochPluginSMTPFunc =
@@ -34640,7 +34657,7 @@ extern "C" {
     pub fn moloch_plugins_register_internal(
         name: *const ::std::os::raw::c_char,
         storeData: gboolean,
-        sessionsize: usize,
+        sessionsize: size_t,
         apiversion: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
@@ -34731,7 +34748,7 @@ extern "C" {
         session: *mut MolochSession_t,
         parser: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     );
 }
 extern "C" {
@@ -34739,7 +34756,7 @@ extern "C" {
         session: *mut MolochSession_t,
         parser: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     );
 }
 extern "C" {
@@ -34747,7 +34764,7 @@ extern "C" {
         session: *mut MolochSession_t,
         parser: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     );
 }
 extern "C" {
@@ -34755,7 +34772,7 @@ extern "C" {
         session: *mut MolochSession_t,
         parser: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     );
 }
 extern "C" {
@@ -34766,7 +34783,7 @@ extern "C" {
         session: *mut MolochSession_t,
         parser: *mut http_parser,
         at: *const ::std::os::raw::c_char,
-        length: usize,
+        length: size_t,
     );
 }
 extern "C" {
@@ -34776,9 +34793,9 @@ extern "C" {
     pub fn moloch_plugins_cb_smtp_oh(
         session: *mut MolochSession_t,
         field: *const ::std::os::raw::c_char,
-        field_len: usize,
+        field_len: size_t,
         value: *const ::std::os::raw::c_char,
-        value_len: usize,
+        value_len: size_t,
     );
 }
 extern "C" {
