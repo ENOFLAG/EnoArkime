@@ -18,10 +18,6 @@ RUN curl https://raw.githubusercontent.com/maxmind/MaxMind-DB/master/test-data/G
 RUN curl https://raw.githubusercontent.com/wireshark/wireshark/master/manuf > /data/moloch/etc/oui.txt
 RUN mkdir raw
 
-COPY ./config.ini ./etc/config.ini
 COPY *.sh ./
-
-RUN echo FOOECHO23
-COPY ./hello_world/target/debug/libhello_world.so ./plugins/libhello_world.so
 
 ENTRYPOINT ["sh", "docker-entrypoint.sh"]
