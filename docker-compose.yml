@@ -1,15 +1,24 @@
 version: '3'
 services:
-  moloch:
-    image: enoflag/enomoloch
+  moloch-viewer:
+    build: .
     ports:
       - 8005:8005
     volumes:
       - "./pcaps:/data/moloch/raw"
       - "./config.ini:/data/moloch/etc/config.ini"
-      #- "../target/debug/libenoxploit_moloch.so:/data/moloch/plugins/libenoxploit_moloch.so"
     environment:
       - "MOLOCH_PASSWORD=changeme"
+    entrypoint: ./docker-viewer.sh
+  moloch-capture:
+    build: .
+    volumes:
+     - "./pcaps:/data/moloch/raw"
+     - "./config.ini:/data/moloch/etc/config.ini"
+     #- "../target/debug/libenoxploit_moloch.so:/data/moloch/plugins/libenoxploit_moloch.so"
+    environment:
+      - "MOLOCH_PASSWORD=changeme"
+    entrypoint: ./docker-capture.sh
   elasticsearchmoloch:
     image: elasticsearch:7.6.0
     environment:

@@ -18,6 +18,7 @@ RUN curl https://raw.githubusercontent.com/maxmind/MaxMind-DB/master/test-data/G
 RUN curl https://raw.githubusercontent.com/wireshark/wireshark/master/manuf > /data/moloch/etc/oui.txt
 RUN mkdir raw
 
+
 COPY *.sh ./
 
 ENTRYPOINT ["sh", "docker-entrypoint.sh"]
