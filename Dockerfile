@@ -8,7 +8,7 @@ apt-get update && \
 apt-get install -y pfring && \
 gem install --no-ri --no-rdoc fpm && \
 git clone https://github.com/aol/moloch && \
-(cd moloch ; sed -i 's/(packets\[0\].ether.data !== undefined)/(packets\[0\].ether !== undefined \&\& packets\[0\].ether.data !== undefined)/' viewer/viewer.js ; ./easybutton-build.sh --daq --pfring --install) && \
+(cd moloch ; ./easybutton-build.sh --daq --pfring --install) && \
 mv moloch/thirdparty / && \
 rm -rf moloch && \
 rm -rf /var/lib/apt/lists/*
