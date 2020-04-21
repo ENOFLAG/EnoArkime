@@ -20,5 +20,6 @@ RUN mkdir raw
 
 
 COPY *.sh ./
+COPY config.default.ini ./etc/config.ini
 
 ENTRYPOINT ["sh", "docker-entrypoint.sh"]
