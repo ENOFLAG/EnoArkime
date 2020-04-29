@@ -3,4 +3,4 @@ Dockerfile
 docker-compose.yml
 .git
 .gitignore
-
+data/
