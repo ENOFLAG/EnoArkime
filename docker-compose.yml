@@ -1,12 +1,12 @@
 version: '3'
 services:
   moloch-viewer:
-    #build: .
-    image: enoflag/enomoloch
+    build: .
+    #image: enoflag/enomoloch
     ports:
       - 8005:8005
     volumes:
-      - "./pcaps:/data/moloch/raw"
+      - "/pcaps:/data/moloch/raw"
       - "./config.ini:/data/moloch/etc/config.ini"
     entrypoint: ./docker-viewer.sh
     depends_on: 
@@ -14,8 +14,8 @@ services:
       - init-db
 
   init-db:
-    #build: .
-    image: enoflag/enomoloch
+    build: .
+    #image: enoflag/enomoloch
     entrypoint: ./elasticsearch_init.sh
     depends_on: 
       - elasticsearchmoloch
@@ -24,23 +24,23 @@ services:
       - "MOLOCH_PASSWORD=changeme"
     
   moloch-capture:
-    #build: .
-    image: enoflag/enomoloch
+    build: .
+    #image: enoflag/enomoloch
     volumes:
-     - "./pcaps:/data/moloch/raw"
+     - "/pcaps:/data/moloch/raw"
      - "./config.ini:/data/moloch/etc/config.ini"
-     #- "../target/debug/libenoxploit_moloch.so:/data/moloch/plugins/libenoxploit_moloch.so"
+     - "./libenoxploit_moloch.so:/data/moloch/plugins/libenoxploit_moloch.so"
     entrypoint: ./moloch-capture.sh
     depends_on: 
       - elasticsearchmoloch
       - init-db
 
   elasticsearchmoloch:
-    image: elasticsearch:7.6.2
+    image: elasticsearch:7.8.0
     environment:
       - discovery.type=single-node
       # should be half of the available RAM
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - ES_JAVA_OPTS=-Xms8g -Xmx8g
       - bootstrap.memory_lock=true
     ulimits:
       memlock:

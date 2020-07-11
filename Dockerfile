@@ -1,17 +1,14 @@
 FROM ubuntu:18.04
 MAINTAINER Andy Wick <andy.wick@oath.com>
 
+ARG VERSION=2.3.2-1
+
 RUN apt-get update && \
-apt-get install -y lsb-release ruby-dev make python-pip git libtest-differences-perl sudo wget && \
-(cd /tmp && wget https://packages.ntop.org/apt-stable/18.04/all/apt-ntop-stable.deb && dpkg -i apt-ntop-stable.deb) && \
-apt-get update && \
-apt-get install -y pfring && \
-gem install --no-ri --no-rdoc fpm && \
-git clone https://github.com/aol/moloch && \
-(cd moloch ; ./easybutton-build.sh --daq --pfring --install) && \
-mv moloch/thirdparty / && \
-rm -rf moloch && \
-rm -rf /var/lib/apt/lists/*
+    apt-get install -y libwww-perl libjson-perl ethtool libyaml-dev libmagic1 curl wget && \
+    wget https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-18.04/moloch_${VERSION}_amd64.deb && \
+    dpkg -i moloch_${VERSION}_amd64.deb && \
+    rm moloch_${VERSION}_amd64.deb && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /data/moloch
 RUN curl https://raw.githubusercontent.com/maxmind/MaxMind-DB/master/test-data/GeoIP2-Anonymous-IP-Test.mmdb > /data/moloch/etc/GeoLite2-Country.mmdb
