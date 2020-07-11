@@ -1,1 +1,1 @@
-# EnoMoloch [![Docker](https://img.shields.io/docker/v/enoflag/enomoloch?sort=semver)](https://hub.docker.com/r/enoflag/enomoloch)
+# EnoMoloch [![Docker](https://img.shields.io/docker/v/enoflag/enomoloch?sort=semver)](https://hub.docker.com/r/enoflag/enomoloch) [![Build Status](https://dev.azure.com/ENOFLAG/EnoMoloch/_apis/build/status/ENOFLAG.EnoMoloch?branchName=master)](https://dev.azure.com/ENOFLAG/EnoMoloch/_build/) ![](https://tokei.rs/b1/github/ENOFLAG/ChallengePad)
