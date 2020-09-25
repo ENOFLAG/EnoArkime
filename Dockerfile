@@ -1,23 +1,18 @@
-FROM ubuntu:18.04
-MAINTAINER Andy Wick <andy.wick@oath.com>
+FROM ubuntu:20.04
 
+#ADD moloch_2.4.0-1_amd64.deb .
+ADD https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-20.04/moloch_2.4.0-1_amd64.deb .
 RUN apt-get update && \
-apt-get install -y lsb-release ruby-dev make python-pip git libtest-differences-perl sudo wget && \
-(cd /tmp && wget https://packages.ntop.org/apt-stable/18.04/all/apt-ntop-stable.deb && dpkg -i apt-ntop-stable.deb) && \
-apt-get update && \
-apt-get install -y pfring && \
-gem install --no-ri --no-rdoc fpm && \
-git clone https://github.com/aol/moloch && \
-(cd moloch ; ./easybutton-build.sh --daq --pfring --install) && \
-mv moloch/thirdparty / && \
-rm -rf moloch && \
+apt-get install -y curl libwww-perl libjson-perl ethtool libyaml-dev && \
+dpkg -i moloch_2.4.0-1_amd64.deb && \
+apt-get install -y libmagic-dev && \
+rm -rf moloch_2.4.0-1_amd64.deb && \
 rm -rf /var/lib/apt/lists/*
 
 WORKDIR /data/moloch
 RUN curl https://raw.githubusercontent.com/maxmind/MaxMind-DB/master/test-data/GeoIP2-Anonymous-IP-Test.mmdb > /data/moloch/etc/GeoLite2-Country.mmdb
 RUN curl https://raw.githubusercontent.com/wireshark/wireshark/master/manuf > /data/moloch/etc/oui.txt
 RUN mkdir raw
-
 
 COPY *.sh ./
 COPY config.default.ini ./etc/config.ini
