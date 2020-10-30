@@ -1,12 +1,13 @@
 FROM ubuntu:20.04
 
-#ADD moloch_2.4.0-1_amd64.deb .
-ADD https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-20.04/moloch_2.4.0-1_amd64.deb .
+ENV VERSION=2.4.1
+
+ADD https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-20.04/moloch_$VERSION-1_amd64.deb .
 RUN apt-get update && \
 apt-get install -y curl libwww-perl libjson-perl ethtool libyaml-dev && \
-dpkg -i moloch_2.4.0-1_amd64.deb && \
+dpkg -i moloch_$VERSION-1_amd64.deb && \
 apt-get install -y libmagic-dev && \
-rm -rf moloch_2.4.0-1_amd64.deb && \
+rm -rf moloch_$VERSION-1_amd64.deb && \
 rm -rf /var/lib/apt/lists/*
 
 WORKDIR /data/moloch
