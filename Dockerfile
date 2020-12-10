@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV VERSION=2.4.1
+ENV VERSION=2.7.1
 
 ADD https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-20.04/moloch_$VERSION-1_amd64.deb .
 RUN apt-get update && \
