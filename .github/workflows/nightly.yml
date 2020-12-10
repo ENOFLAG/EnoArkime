@@ -4,6 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
+      - main
       - master
 
 env:
