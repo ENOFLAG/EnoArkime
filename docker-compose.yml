@@ -1,27 +1,13 @@
 version: '3'
 services:
-  moloch-viewer:
+  moloch:
     build: .
     ports:
       - 8005:8005
     volumes:
-      - "./pcaps:/data/moloch/raw"
-      - "./config.ini:/data/moloch/etc/config.ini"
-    environment:
-      - "MOLOCH_PASSWORD=changeme"
-    entrypoint: ./docker-viewer.sh
-  moloch-capture:
-    build: .
-    volumes:
-     - "./pcaps:/data/moloch/raw"
-     - "./config.ini:/data/moloch/etc/config.ini"
-     #- "../target/debug/libenoxploit_moloch.so:/data/moloch/plugins/libenoxploit_moloch.so"
-    environment:
-      - "MOLOCH_PASSWORD=changeme"
-    entrypoint: ./docker-capture.sh
+      - "./pcaps:/opt/arkime/raw"
   elasticsearchmoloch:
-    image: elasticsearch:7.6.0
+    image: elasticsearch:7.14.2
     environment:
       - discovery.type=single-node
-      # should be half of the available RAM
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+# pluginsDir=/opt/arkime/plugins

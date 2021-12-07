@@ -16,10 +16,8 @@ if [[ ! $(curl -s --head "http://elasticsearchmoloch:9200/dstats_v4") == *"200*"
    [[ ! $(curl -s --head "http://elasticsearchmoloch:9200/files_v6") == *"200*" ]] && \
    [[ ! $(curl -s --head "http://elasticsearchmoloch:9200/lookups_v1") == *"200*" ]]; then
    echo "Initializing elasticsearch..."
-   (echo "INIT" | /data/moloch/db/db.pl http://elasticsearchmoloch:9200 init) || exit 1
+   (echo "INIT" | /opt/arkime/db/db.pl http://elasticsearchmoloch:9200 init) || exit 1
 
-   [ -z "$MOLOCH_USER" ] && MOLOCH_USER="moloch"
-   [ -z "$MOLOCH_PASSWORD" ] && MOLOCH_PASSWORD="moloch"
-   echo "Adding user: $MOLOCH_USER"
-   /data/moloch/bin/moloch_add_user.sh "$MOLOCH_USER" "moloch" "$MOLOCH_PASSWORD" --admin --packetSearch || exit 1
+   echo "Adding moloch user"
+   /opt/arkime/bin/arkime_add_user.sh "moloch" "Admin User" "moloch" --admin --packetSearch || exit 1
 fi
