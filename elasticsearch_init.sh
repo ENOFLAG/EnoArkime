@@ -6,15 +6,15 @@ while ! curl -sq http://elasticsearch:9200; do
 done
 
 echo "Check if elasticsearch is initalized, otherwise do it"
-if [[ ! $(curl -s --head "http://elasticsearch:9200/dstats_v4") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/users_v7") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/fields_v3") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/queries_v3") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/stats_v4") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/sequence_v3") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/hunts_v2") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/files_v6") == *"200*" ]] && \
-   [[ ! $(curl -s --head "http://elasticsearch:9200/lookups_v1") == *"200*" ]]; then
+if [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_dstats_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_users_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_fields_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_queries_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_stats_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_sequence_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_hunts_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_files_v30") == *"200*" ]] && \
+   [[ ! $(curl -s --head "http://elasticsearch:9200/arkime_lookups_v30") == *"200*" ]]; then
    echo "Initializing elasticsearch..."
    (echo "INIT" | /opt/arkime/db/db.pl http://elasticsearch:9200 init) || exit 1
 
