@@ -1,4 +1,4 @@
-# EnoMoloch
+# EnoArkime
 
 ```yaml
 version: '3'
@@ -9,7 +9,7 @@ services:
       - 8005:8005
     volumes:
       - "./pcaps:/opt/arkime/raw"
-  elasticsearchmoloch:
+  elasticsearch:
     image: elasticsearch:7.14.2
     environment:
       - discovery.type=single-node
