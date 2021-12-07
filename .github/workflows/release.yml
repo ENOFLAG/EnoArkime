@@ -6,7 +6,7 @@ on:
     tags:
       - v*
 env:
-  IMAGE_NAME: enomoloch
+  IMAGE_NAME: enoarkime
 
 jobs:
   # Push image to GitHub Packages.
@@ -16,9 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Build image
-        run: docker build . --tag $IMAGE_NAME
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
@@ -36,6 +33,7 @@ jobs:
           # Strip "v" prefix from tag name
           VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:latest
-          docker push $IMAGE_ID
+          docker image build -t $IMAGE_ID:$VERSION .
+          docker image build -t $IMAGE_ID:latest .
+          docker image push $IMAGE_ID:$VERSION
+          docker image push $IMAGE_ID:latest
