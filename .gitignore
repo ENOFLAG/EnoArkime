@@ -1,3 +1,7 @@
 target/
 *.pcap
+.github
+
 docker-compose.yml
+Dockerfile
+.dockerignore
