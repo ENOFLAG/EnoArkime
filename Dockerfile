@@ -1,17 +1,15 @@
-FROM ubuntu:22.04
+FROM ubuntu:22.04 as build
 
-ENV VERSION=4.5.0
+ENV VERSION=5.1.0
+ADD https://www.wireshark.org/download/automated/data/manuf /opt/arkime/etc/oui.txt
+ADD https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.csv /opt/arkime/etc/ipv4-address-space.csv
 
-ADD https://s3.amazonaws.com/files.molo.ch/builds/ubuntu-22.04/arkime_${VERSION}-1_amd64.deb .
-RUN apt update && \
-    apt install -y htop nano tree curl libwww-perl libjson-perl ethtool libyaml-dev liblua5.4-0 libmaxminddb0 libcurl4 libpcap0.8 libglib2.0-0 libnghttp2-14 libyara8 librdkafka1 && \
-    dpkg -i arkime_${VERSION}-1_amd64.deb && \
-    apt install -y libmagic-dev && \
-    rm -rf arkime_$VERSION-1_amd64.deb && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y libwww-perl libjson-perl ethtool libyaml-dev liblua5.4-0 libmaxminddb0 libcurl4 libpcap0.8 libglib2.0-0 libnghttp2-14 libyara8 librdkafka1 curl
 
-RUN curl https://fossies.org/linux/misc/wireshark-4.0.8.tar.xz/wireshark-4.0.8/manuf?m=b > /opt/arkime/etc/oui.txt
-RUN curl https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.csv > /opt/arkime/etc/ipv4-address-space.csv
+WORKDIR /EnoArkime
+ADD https://github.com/arkime/arkime/releases/download/v$VERSION/arkime_$VERSION-1.ubuntu2204_amd64.deb .
+RUN dpkg -i ./*.deb; apt-get install -fy && rm -rf /var/lib/apt/lists/* && rm *.deb
 
 COPY elasticsearch_init.sh elasticsearch_init.sh
 COPY arkime-viewer.sh arkime-viewer.sh
@@ -19,4 +17,8 @@ COPY arkime-capture.sh arkime-capture.sh
 COPY docker-entrypoint.sh docker-entrypoint.sh
 COPY config.ini /opt/arkime/etc/config.ini
 
-ENTRYPOINT /docker-entrypoint.sh
+
+FROM scratch
+WORKDIR /EnoArkime
+ENTRYPOINT /EnoArkime/docker-entrypoint.sh
+COPY --from=build / /
