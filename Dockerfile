@@ -1,6 +1,6 @@
 FROM ubuntu:22.04 as build
 
-ENV VERSION=5.1.0
+ENV VERSION=5.3.0
 ADD https://www.wireshark.org/download/automated/data/manuf /opt/arkime/etc/oui.txt
 ADD https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.csv /opt/arkime/etc/ipv4-address-space.csv
 
