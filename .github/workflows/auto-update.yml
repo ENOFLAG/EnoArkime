@@ -22,6 +22,7 @@ jobs:
       uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # 7.0.8
       with:
         token: ${{ secrets.AUTO_UPDATE_TOKEN }}
+        branch-token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: Bump Arkime version to ${{ env.LATEST_VERSION }}
         author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
         branch: bump-v${{ env.LATEST_VERSION }}
