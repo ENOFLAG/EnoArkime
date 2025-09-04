@@ -25,10 +25,10 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # 7.0.8
       with:
-        commit-message: Bump Arkime version to ${LATEST_VERSION}
+        commit-message: Bump Arkime version to ${{ env.LATEST_VERSION }}
         author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-        branch: bump-v${LATEST_VERSION}
-        title: Bump Arkime version to ${LATEST_VERSION}
+        branch: bump-v${{ env.LATEST_VERSION }}
+        title: Bump Arkime version to ${{ env.LATEST_VERSION }}
         assignees: ldruschk
         labels: |
           automated pr
