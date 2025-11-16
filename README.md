@@ -1,7 +1,6 @@
 # EnoArkime
 
 ```yaml
-version: '3'
 services:
   arkime:
     image: ghcr.io/enoflag/enoarkime:nightly
@@ -9,8 +8,12 @@ services:
       - 8005:8005
     volumes:
       - "./pcaps:/opt/arkime/raw"
-  elasticsearch:
-    image: elasticsearch:7.14.2
+    environment:
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Enoflag123!
+  opensearch:
+    image: public.ecr.aws/opensearchproject/opensearch:3
     environment:
       - discovery.type=single-node
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Enoflag123!
+
 ```
